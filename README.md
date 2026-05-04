@@ -52,6 +52,63 @@ The application follows a classic MVC structure:
 
 ---
 
+## 📁 Project Structure
+
+```text
+.
+├── app.js                          # Main application entry (Express setup)
+├── package.json                    # Dependencies and scripts
+├── package-lock.json               # Dependency lock file
+│
+├── bin/
+│   └── www                         # Server startup script
+│
+├── config/
+│   └── winston.js                  # Logging configuration
+│
+├── controllers/                    # Application logic (MVC controllers)
+│   ├── admin_controller.js
+│   ├── user_controller.js
+│   ├── log_controller.js
+│   └── modifica_valida_modello_controller.js
+│
+├── models/                         # Database schemas (Mongoose)
+│   ├── utenti.js
+│   ├── modelli.js
+│   ├── documenti.js
+│   └── corso.js
+│
+├── routes/                         # Express routes
+│   ├── index.js
+│   ├── profilo_admin.js
+│   └── profilo_utente.js
+│
+├── views/                          # EJS templates (frontend UI)
+│   ├── login.ejs
+│   ├── profilo_admin_*.ejs
+│   ├── profilo_utente.ejs
+│   ├── modifica_*.ejs
+│   ├── valida_modello.ejs
+│   ├── visualizza_documento.ejs
+│   └── error/404 views
+│
+├── public/                         # Static assets (frontend)
+│   ├── javascripts/
+│   │   ├── moloc.js
+│   │   └── moloc_script/
+│   │       ├── phaseZero/          # Core logic and rules
+│   │       ├── phaseOne/           # Model creation & parsing
+│   │       ├── phaseTwo/           # Traces and execution
+│   │       ├── phaseThree/         # Output & validation
+│   │       └── phaseFour/          # Analysis & visualization
+│   │
+│   ├── stylesheets/
+│   └── images/
+│
+└── .env.example                   # Example environment configuration
+
+---
+
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
