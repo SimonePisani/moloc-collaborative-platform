@@ -117,7 +117,19 @@ The system supports:
 
 ## 📷 Screenshots
 
-*Add screenshots here to showcase the UI (recommended for portfolio visibility).*
+<img width="1868" height="572" alt="Moloc" src="https://github.com/user-attachments/assets/43e2ab1d-d004-4a65-b694-723a1792e3b8" />
+
+---
+
+<img width="1858" height="941" alt="Moloc2" src="https://github.com/user-attachments/assets/595b530c-27f5-423f-be82-a4b46bc9de6b" />
+
+---
+
+<img width="1856" height="944" alt="Screenshot 2026-05-04 124924" src="https://github.com/user-attachments/assets/6faed281-80e5-4519-9f50-f9a7ffb2ccb4" />
+
+---
+
+<img width="1858" height="914" alt="Moloc4" src="https://github.com/user-attachments/assets/60cfc19d-57d1-4209-a33b-2222734bf44d" />
 
 ---
 
