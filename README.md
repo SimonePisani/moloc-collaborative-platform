@@ -1,210 +1,191 @@
-# Moloc – Collaborative Platform
+# Moloc – Collaborative Platform for Model Analysis
 
-University project – client-server web platform for collaborative model analysis, document versioning and automatic validation.
+A full-stack collaborative web platform designed to support the creation, validation and management of structured models in an academic environment.
 
----
-
-## 🚀 Overview
-
-Moloc is a web-based platform developed to support the creation, validation, and collaborative management of structured models.
-The system replaces a legacy desktop tool with a modern client-server architecture, enabling multiple users to interact with shared resources through a browser.
+Originally developed as part of a Bachelor’s thesis, the platform was **actively used until 2024** within a university course, supporting real users (students and instructors) in collaborative workflows.
 
 ---
 
-## ✨ Features
+## Overview
 
-* 🔐 User authentication and role-based access control (admin / user)
-* 🤝 Collaborative document and model management
-* 📝 Document editing and visualization
-* 🕒 Versioning system for documents and models
-* ✅ Automatic validation of structured models
-* 🌐 Web interface accessible via browser
-* ⚙️ Migration from legacy standalone application
+Moloc was designed to overcome limitations of a previous client-side tool by introducing a **scalable client-server architecture**, enabling:
 
----
+* centralized model management
+* real-time validation
+* structured collaboration between students and instructors
 
-## 🏗️ Architecture
-
-The application follows a classic MVC structure:
-
-* **Backend:** Node.js + Express
-* **Database:** MongoDB (via Mongoose)
-* **Frontend:** EJS templates + JavaScript
-* **Structure:**
-
-  * `controllers/` → application logic
-  * `models/` → database schemas
-  * `routes/` → routing layer
-  * `views/` → UI templates
-  * `public/` → static assets
+The platform integrates editing, versioning and validation into a single environment.
 
 ---
 
-## 🛠️ Tech Stack
+## Problem
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* EJS
-* JavaScript (frontend)
-* CSS
+The original system (client-side tool) presented several limitations:
+
+* manual distribution and updates
+* local-only model management
+* inefficient interaction between students and instructors
+* lack of centralized validation and monitoring
 
 ---
 
-## 📁 Project Structure
+## Solution
 
-```text
+Moloc introduces a **full-stack web platform** that:
+
+* centralizes model storage and validation
+* supports multiple users with different roles
+* enables version tracking and model history
+* simplifies interaction between students and instructors
+
+---
+
+## Key Features
+
+### 👥 User Management
+
+* Authentication system with role-based access (admin / user)
+* Session management and route protection
+* Secure password handling (hash + salt)
+
+---
+
+### 📄 Model Management & Versioning
+
+* Creation and editing of models
+* Version control system (with history tracking)
+* Restore previous versions
+* Automatic version indexing
+
+---
+
+### 🛠 Integrated Editor
+
+* Built-in text editor for model creation
+* Version selection and editing workflow
+* Real-time interaction with validation system
+
+---
+
+### ✅ Model Validation Engine
+
+* Migration of an existing validation tool into the platform
+* Automatic analysis of model structure
+* Error detection and structured feedback
+* Dynamic UI highlighting issues
+
+---
+
+### 🧑‍🏫 Admin Dashboard
+
+* User management (create, edit, delete)
+* Model inspection across users
+* Ability to copy or remove models
+* Separation between user and admin workflows
+
+---
+
+## Architecture
+
+The application follows a **Three-Tier Architecture**:
+
+* **Presentation Layer** → EJS templates + frontend logic
+* **Application Layer** → Node.js + Express (business logic)
+* **Data Layer** → MongoDB (document-based storage)
+
+Additionally, the system is structured using the **Model-View-Controller (MVC)** pattern:
+
+* **Models** → Data schemas (Mongoose)
+* **Views** → UI rendering (EJS templates)
+* **Controllers** → Application logic and routing
+
+---
+
+## Tech Stack
+
+* **Backend:** Node.js, Express
+* **Database:** MongoDB, Mongoose
+* **Frontend:** EJS, Bootstrap, JavaScript
+* **Auth:** Passport.js
+
+---
+
+## Real Usage & Testing
+
+The platform was deployed on a university server and used in a real academic course.
+
+### Testing Phases:
+
+* **Alpha Testing** → internal validation and debugging
+* **Beta Testing** → real users (students)
+
+### Feedback-driven improvements:
+
+* UI/UX enhancements
+* navigation improvements
+* bug fixes in validation logic
+* performance optimizations
+
+User feedback highlighted:
+
+* improved interaction speed with instructors
+* better workflow compared to previous system
+* overall positive experience
+
+---
+
+## Project Structure
+
+```id="a2k91s"
 .
-├── app.js                          # Main application entry (Express setup)
-├── package.json                    # Dependencies and scripts
-├── package-lock.json               # Dependency lock file
-│
-├── bin/
-│   └── www                         # Server startup script
-│
-├── config/
-│   └── winston.js                  # Logging configuration
-│
-├── controllers/                    # Application logic (MVC controllers)
-│   ├── admin_controller.js
-│   ├── user_controller.js
-│   ├── log_controller.js
-│   └── modifica_valida_modello_controller.js
-│
-├── models/                         # Database schemas (Mongoose)
-│   ├── utenti.js
-│   ├── modelli.js
-│   ├── documenti.js
-│   └── corso.js
-│
-├── routes/                         # Express routes
-│   ├── index.js
-│   ├── profilo_admin.js
-│   └── profilo_utente.js
-│
-├── views/                          # EJS templates (frontend UI)
-│   ├── login.ejs
-│   ├── profilo_admin_*.ejs
-│   ├── profilo_utente.ejs
-│   ├── modifica_*.ejs
-│   ├── valida_modello.ejs
-│   ├── visualizza_documento.ejs
-│   └── error/404 views
-│
-├── public/                         # Static assets (frontend)
-│   ├── javascripts/
-│   │   ├── moloc.js
-│   │   └── moloc_script/
-│   │       ├── phaseZero/          # Core logic and rules
-│   │       ├── phaseOne/           # Model creation & parsing
-│   │       ├── phaseTwo/           # Traces and execution
-│   │       ├── phaseThree/         # Output & validation
-│   │       └── phaseFour/          # Analysis & visualization
-│   │
-│   ├── stylesheets/
-│   └── images/
-│
-└── .env.example                   # Example environment configuration
-
----
-
-## ⚙️ Installation & Setup
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/SimonePisani/moloc-collaborative-platform.git
-cd moloc-collaborative-platform
+├── controllers/
+├── models/
+├── routes/
+├── views/
+├── public/
+├── app.js
+└── package.json
 ```
 
 ---
 
-### 2. Install dependencies
+## How to Run
 
-```bash
+```bash id="x3l9qp"
 npm install
-```
-
----
-
-### 3. Configure environment variables
-
-Create a `.env` file based on `.env.example`:
-
-```env
-MONGO_URI=your_mongodb_connection_string
-SESSION_SECRET=your_secret_key
-PORT=8080
-```
-
----
-
-### 4. Run the application
-
-```bash
 npm start
 ```
 
-The server will start on:
+---
 
-```
-http://localhost:8080
-```
+## Notes
+
+* This project was originally developed in a university environment and later consolidated into this repository
+* The commit history does not fully reflect the original development process
 
 ---
 
-## 🔐 Authentication
+## Screenshots / Demo
 
-The system supports:
-
-* User registration
-* Login system
-* Role-based permissions (admin / standard user)
+Dashboard
+<img width="1858" height="941" alt="Screenshot 2026-05-04 123550" src="https://github.com/user-attachments/assets/3538d2d2-8b27-40cc-8ea6-904eb0f91d53" />
 
 ---
 
-## 📌 Notes
-
-* This project was developed as part of a university thesis.
-* It has been tested in a real academic environment.
-* Some configurations (e.g. database credentials) are intentionally excluded for security reasons.
+Overview
+<img width="1837" height="960" alt="Screenshot 2026-05-04 123650" src="https://github.com/user-attachments/assets/9f341b06-d579-4df4-8911-f9d75081a44f" />
 
 ---
 
-## 📷 Screenshots
-
-<img width="1868" height="572" alt="Moloc" src="https://github.com/user-attachments/assets/43e2ab1d-d004-4a65-b694-723a1792e3b8" />
-
----
-
-<img width="1858" height="941" alt="Moloc2" src="https://github.com/user-attachments/assets/595b530c-27f5-423f-be82-a4b46bc9de6b" />
+Validation System
+<img width="1858" height="914" alt="Screenshot 2026-05-04 124316" src="https://github.com/user-attachments/assets/d442da6e-4a37-46e5-828e-e692f664acb7" />
 
 ---
 
-<img width="1856" height="944" alt="Screenshot 2026-05-04 124924" src="https://github.com/user-attachments/assets/6faed281-80e5-4519-9f50-f9a7ffb2ccb4" />
+## Key Takeaways
 
----
-
-<img width="1858" height="914" alt="Moloc4" src="https://github.com/user-attachments/assets/60cfc19d-57d1-4209-a33b-2222734bf44d" />
-
----
-
-## 🚧 Future Improvements
-
-* UI/UX modernization
-* REST API refactoring
-* Deployment (Docker / cloud)
-* Improved validation engine
-
----
-
-## 👨‍💻 Author
-
-Simone Pisani
-
----
-
-## 📄 License
-
-This project is for educational purposes.
+* Designed and implemented a full-stack application
+* Applied MVC and three-tier architecture
+* Worked with real users and feedback loops
+* Migrated and integrated an existing tool into a new system
+* Built a platform used in a real academic environment
