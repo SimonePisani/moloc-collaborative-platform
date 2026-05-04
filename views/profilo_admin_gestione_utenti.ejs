@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+   <link rel='shortcut icon' type='image/x-icon' href='/images/favicon-moloc.ico' />
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+<!--Header-->
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+   <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+   <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+      <select class="selectpicker" onchange="window.location.href=this.value">
+         <optgroup label="Dashboard">
+            <option selected>Gestione Utenti</option>
+            <option value="/profilo_admin/gestione_modelli">Gestione Modelli</option>
+            <option value="/profilo_admin/gestione_corsi">Gestione Corso</option>
+         </optgroup>
+      </select>
+      <ul class="nav">
+         <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <%= utente.username %>
+            </a>
+            <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+<!--End header-->
+<!--Main content-->
+<div class="container-fluid page-navbar" id="up">
+   <div class="row">
+      <div class="section-nav col-12 mx-auto py-4 px-0">
+         <nav class="col-12 navbar justify-content-center navbar-expand navbar-light bg-light border-bottom border-dark mt-4">
+            <div class="navbar-nav" id="navbar">
+               <a class="nav-item nav-link active">Gestione utenti</a>
+               <a class="nav-item nav-link" href="/profilo_admin/gestione_modelli">Gestione modelli</a>
+               <a class="nav-item nav-link" href="/profilo_admin/gestione_corsi">Gestione corso</a>
+            </div>
+         </nav>
+      </div>
+   </div>
+</div>
+<div class="container-fluid page-content">
+   <div class="row">
+      <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+         <h3 class="mt-3">Gestione utenti</h3>
+      </div>
+      <% if(utenti.length==0){ %>
+         <p class="mx-auto my-3">Attualmente non sono presenti utenti nel database, aggiungine di nuovi.</p>
+         <hr class="col-12 mt-1">
+      <%} else {%>
+         <div class="col-3 text-center shadowtag bg-tab mb-4 py-2 mt-5 ">
+            <b>Username:</b>
+         </div>
+         <div class="col-3 text-center shadowtag bg-tab mb-4 py-2 mt-5">
+            <b>Numero Modelli:</b>
+         </div>
+         <div class="col-3 text-center shadowtag bg-tab mb-4 py-2 mt-5">
+            <b>Moderazione:</b>
+         </div>
+         <div class="col-3 text-center shadowtag bg-tab mb-4 py-2 mt-5">
+            <b class="">Operazioni:</b>
+         </div>
+         <% utenti.forEach(function(utente){ %>
+            <div class="col-3 text-center py-3">
+               <b><%= utente.username %></b>
+            </div>
+            <div class="col-3 text-center py-3">
+               <p><%= utente.numodelli %></p>
+            </div>
+            <div class="col-3 text-center py-3">
+               <% if(utente.moderatore){ %>
+                  <p>Sì</p>
+               <%} else {%>
+                  <p>No</p>
+               <% } %>
+            </div>
+            <div class="col-3 py-3 text-center">
+               <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="icon-cog"></i></button>
+                  <div class="dropdown-menu border border-dark">
+                     <a class="dropdown-item" href="/profilo_admin/modifica_utente/<%= utente.id %>"><i class="icon-edit-sign"></i> Gestisci Utente</a>
+                     <a class="dropdown-item" href="/profilo_admin/anteprima_documento/<%= utente.id %>"><i class="icon-zoom-in"></i> Anteprima Documento di Analisi</a>
+                     <div class="dropdown-divider"></div>
+                     <form action="/profilo_admin/cancella_utente/<%= utente.id %>" method="post">
+                        <button class="dropdown-item text-danger form-elimina-utente" type="submit"><i class="icon-remove"></i> Elimina Utente</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+            <div class="collapse col-10 mx-auto" id="Collapse_utente_<%= utente.id %>">
+               <table class="table table-bordered my-3 text-centert tavola_utente">
+                  <thead class="bg-thead">
+                  <tr>
+                     <th scope="col" class="col_50">
+                        <p>Titolo</p>
+                     </th>
+                     <th scope="col" class="col_25">
+                        <p>Ultima Modifica</p>
+                     </th>
+                     <th scope="col" class="col_25">
+                        <p>Operazioni</p>
+                     </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% modelli.forEach(function(model){ %> <% if (model.utente == utente.id && model.flag==true) { %>
+                     <tr>
+                        <td>
+                           <p><%= model.titolo %></p>
+                        </td>
+                        <td>
+                           <p><%= model.ultimamodifica %></p>
+                        </td>
+                        <td>
+                           <div class="dropdown">
+                              <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="icon-cog"></i></button>
+                              <div class="dropdown-menu border border-dark">
+                                 <form class="d-inline" action="/profilo_admin/copia_modello/<%= model.id %>" method="post">
+                                    <button type="submit" class="dropdown-item"><i class="icon-copy"></i> Copia Modello</button>
+                                 </form>
+                                 <div class="dropdown-divider"></div>
+                                 <form class="d-inline" action="/profilo_admin/cancella_modello/<%= model.id %>" method="post">
+                                    <button type="submit" class="dropdown-item text-danger form-elimina-modello"><i class="icon-remove"></i> Elimina Modello</button>
+                                 </form>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  <% } %>
+                  <% }) %>
+                  </tbody>
+               </table>
+            </div>
+            <div class="col-12 text-center">
+               <a data-toggle="collapse" href="#Collapse_utente_<%= utente.id %>" class="expand collapsed espandi"></a>
+               <hr class="mt-2 border border-secondary col-10">
+            </div>
+         <% }) %>
+      <% } %>
+      <div class="col-12 text-center my-5">
+         <form action="/profilo_admin/registra_utente" method="get">
+            <button type="submit" class="btn btn-small btn-success">Aggiungi Utente</button>
+         </form>
+      </div>
+   </div>
+</div>
+<!--End main content-->
+<!--footer-->
+<footer class="page-footer border-top border-dark">
+   <div class="col-12 text-center text-white">
+   </div>
+</footer>
+<!--end footer-->
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>

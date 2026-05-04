@@ -1,0 +1,445 @@
+/*----------------global----------------*/
+html {
+  font-size: 14px !important;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+main {
+  animation: fadeIn ease 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.headerlogin {
+  min-height: 20vh !important;
+  background-color: #3D5A80;
+  -webkit-box-shadow: 5px 5px 13px 5px rgba(0, 0, 0, 0.48) !important;
+  box-shadow: 5px 5px 13px 5px rgba(0, 0, 0, 0.48) !important;
+}
+
+.contentlogin {
+  min-height: 70vh !important;
+  font-size: 16px;
+  background-color: #FAF9F6 !important;
+}
+
+.page-content {
+  min-height: 90vh !important;
+  font-size: 15px;
+  background-color: #FAF9F6 !important;
+}
+
+.page-navbar {
+  background-color: #F3FCF0 !important;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+footer {
+  min-height: 10vh !important;
+  background-color: #3D5A80;
+}
+
+tbody tr {
+  background-color: rgba(0, 0, 0, .05) !important;
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+  border: 1px solid black;
+}
+
+.table-bordered {
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
+}
+
+.editsection{
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px !important;
+}
+/*----------------nav's style----------------*/
+nav {
+  font-size: 15px;
+}
+
+.navtop {
+  background-color: #3D5A80 !important;
+}
+
+nav a {
+  color: white;
+}
+
+nav a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+#back-to-top{
+  z-index: 1031;
+}
+
+/*----------------btn's style----------------*/
+.btn-outline-light {
+  background-color: transparent !important;
+  color: #545454 !important;
+}
+
+.btn-outline-light:hover {
+  color: black !important;
+}
+
+.back-to-top {
+  background-color: #282828 !important;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  display: none;
+}
+
+.back-to-top img {
+  width: 50px;
+  height: 50px;
+  padding: 10px 10px 10px 10px;
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+.back-to-top:hover img {
+  opacity: 1;
+}
+
+/*----------------card's style----------------*/
+.card {
+  box-shadow: 13px 10px 29px 0px rgba(0, 0, 0, 0.75);
+}
+
+/*----------------disabled link's style----------------*/
+.isDisabled {
+  pointer-events: none;
+}
+
+/*----------------expand's style----------------*/
+.espandi {
+  font-size: 12.5px !important;
+  color: black !important;
+}
+
+/*----------------cells width----------------*/
+.col_60 {
+  width: 60% !important;
+}
+
+.col_90 {
+  width: 90% !important;
+}
+
+.col_50 {
+  width: 50% !important;
+}
+
+.col_40 {
+  width: 40% !important;
+}
+
+.col_25 {
+  width: 25% !important;
+}
+
+.col_15 {
+  width: 15% !important;
+}
+
+.col_10 {
+  width: 10% !important;
+}
+
+/*----------------tab's background, border color----------------*/
+.bg-tab {
+  background-color: #EE6C4D;
+  color: white;
+}
+
+.bg-thead{
+  background-color: #457b9d;
+  color: white;
+}
+
+.shadowtag{
+  webkit-box-shadow: 0 0 0 4px black, 0 6px 4px black;
+   -moz-box-shadow: 0 0 0 4px black, 0 6px 4px black;
+        box-shadow: 0 0 0 1px black, 0 3px 2px black;
+}
+
+.border-tab {
+  border-color: #3D5A80 !important;
+}
+
+/*----------------list-group-item's style----------------*/
+.list-group-item.active {
+  background-color: inherit !important;
+}
+
+.list-group-item.active:hover {
+  background-color: inherit !important;
+  color: black !important;
+}
+
+.list-group-item {
+  background-color: inherit !important;
+  color: white !important;
+}
+
+.list-group-item:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+/*----------------Validatore----------------*/
+.div_title {
+  background: rgb(226,60,21);
+  background: linear-gradient(90deg, rgba(226,60,21,1) 0%, rgba(238,108,77,0.8757878151260504) 44%, rgba(226,60,21,1) 100%);
+  z-index: 1;
+  transition: background 1s ease-out;
+}
+
+.div_title:hover {
+  background-position: 400px;
+  cursor: pointer;
+}
+
+.div_title_error {
+  background: rgb(255, 114, 114);
+  background: radial-gradient(circle, rgba(255, 114, 114, 1) 0%, rgba(255, 0, 0, 1) 100%);
+  z-index: 1;
+  transition: background 1s ease-out;
+  color: white;
+}
+
+.div_title a, .div_title_error a{
+  color: white !important;
+}
+
+.div_title_error a:hover{
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.div_title a:hover{
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.div_title_error:hover {
+  background-position: 400px;
+  cursor: pointer;
+}
+
+#info {
+  height: 30px;
+  width: 30px;
+}
+
+.shadowed {
+  -webkit-box-shadow: 0px 17px 21px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 0px 17px 21px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 0px 17px 21px 0px rgba(50, 50, 50, 0.75);
+}
+
+.textRed {
+  color: red;
+}
+
+.tooltiptxt {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptxt .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: grey;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+}
+
+.tooltiptxt:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltipBlue {
+  position: relative;
+  color: blue;
+  display: inline-block;
+}
+
+.tooltipBlue .tooltiptextBlue {
+  visibility: hidden;
+  width: 120px;
+  background-color: grey;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+}
+
+.tooltipBlue:hover .tooltiptextBlue {
+  visibility: visible;
+}
+
+#traceSequences {
+  min-height: 150px;
+  max-height: 150px;
+}
+
+.dati li{
+  margin-left: 1.25rem !important;
+}
+
+/*----------------Dashboard admin----------------*/
+.expand.collapsed::after {
+  content: "↓ Mostra i modelli associati all'utente";
+}
+
+.expand:not(.collapsed)::after {
+  content: '↑ Comprimi';
+}
+
+/*----------------Sidebar----------------*/
+.sidebar {
+  position: absolute;
+  top: 60;
+  bottom: 0;
+  left: 0;
+  z-index: 1020;
+  /* Behind the navbar */
+  background-color: #293241;
+  -webkit-box-shadow: 11px 0px 28px 5px rgba(0, 0, 0, 0.52);
+  box-shadow: 11px 0px 28px 5px rgba(0, 0, 0, 0.52);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 80px;
+  padding-top: 70px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+/*----------------Anteprima/Modifica documento di analisi----------------*/
+hr.dotted {
+  border-top: 2px dotted #999;
+}
+
+#glossario b {
+  display: block;
+}
+
+#glossario li, #ruoli_giuridici li, #ruoli_individuali li, #ruoli_collettivi li, #documenti li, #flussi li, #attività_individuali li, #attività_collettive li, #attività_giuridiche li {
+  margin-bottom: 12px;
+}
+
+.navbar-brand small {
+  font-size: 12px !important;
+}
+
+.utente {
+  font-size: 14px;
+}
+
+.utentelogin {
+  min-width: 8rem !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, .85) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255) !important;
+}
+
+.material-switch > input[type="checkbox"] {
+    display: none;
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative;
+    width: 40px;
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}

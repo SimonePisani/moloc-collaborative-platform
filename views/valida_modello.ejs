@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+   <link rel='shortcut icon' href='/images/favicon-moloc.ico' />
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+   <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+   <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+      <select class="selectpicker" onchange="window.location.href=this.value">
+         <%if (utente.moderatore == true) { %>
+         <optgroup label="Dashboard">
+            <option value="/profilo_admin">Gestione Utenti</option>
+            <option value="/profilo_admin/gestione_modelli">Gestione Modelli</option>
+            <option value="/profilo_admin/gestione_corsi">Gestione Corso</option>
+         </optgroup>
+         <optgroup label="Modellazione">
+            <option value="/profilo_admin/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/modifica_progetto">Modifica Modello</option>
+            <option selected>Analizza Modello</option>
+         </optgroup>
+         <% } else{ %>
+         <optgroup label="Dashboard">
+            <option value="/profilo_utente">Gestione Profilo</option>
+         </optgroup>
+         <optgroup label="Modellazione">
+            <option value="/profilo_utente/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/modifica_progetto">Modifica Modello</option>
+            <option selected>Analizza Modello</option>
+         </optgroup>
+         <% } %>
+      </select>
+      <ul class="nav">
+         <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <%= utente.username %>
+            </a>
+            <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+<!--End Header-->
+<!--Main content-->
+<div class="container-fluid page-content" id="up">
+   <div class="row">
+      <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+         <h3 class="mt-5" id="titolo_validatore">Validatore</h3>
+      </div>
+      <div class="section-content col-12 py-5 px-0">
+         <div class="col-12 mb-5">
+            <h4 class="text-center mt-3" id="model_title"><%=modello.titolo%></h4>
+            <%if (utente.moderatore == true) { %>
+               <% autori.forEach(function(autore){ %>
+               <%if(modello.autore_originale==autore.id){ %>
+                  <p class="text-center mb-2"><b>Autore originale: <%= autore.username %></b></p>
+               <% } %>
+               <% }) %>
+            <% } %>
+            <p class="text-center text-muted mb-3">v.<%= (modello.indice).toFixed(2) %></p>
+            <textarea class="form-control col-11 mx-auto border border-dark" id="model_text" rows="20" readonly><%=modello.testo%></textarea>
+         </div>
+
+         <div id="errors_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse4">
+               <h3><i>Errori e Log </i><i id="errors_icon">&#8690;</i></h3>
+            </a>
+         </div>
+         <div class="col-10 row collapse justify-content-around mx-auto" id="collapse4">
+
+            <div class="col-7 my-5 mb-2 card border border-dark">
+               <h5 class="card-header">Errori</h5>
+               <div class="card-body dati px-1" id="nodeErrors">
+
+               </div>
+            </div>
+
+            <div class="col-4 my-5 mb-2 card border border-dark p-0">
+               <h5 class="card-header">Log</h5>
+               <div class="card-body dati p-0">
+                  <textarea class="form-control p-0" id="nodeSystemLog" rows="15" readonly></textarea>
+               </div>
+            </div>
+
+         </div>
+
+         <div id="2d_rappresentation_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse5">
+               <h3><i>Rappresentazione 2D e Coordinamento </i><i id="2d_rappresentation_icon">&#8690;</i></h3>
+            </a>
+         </div>
+         <div class="col-10 row collapse justify-content-around mx-auto" id="collapse5">
+
+            <div class="col-12 mt-5 mb-2 card border border-dark">
+               <h5 class="card-header">Espressione di Coordinamento</h5>
+               <div class="card-body dati px-1" id="nodeCoordExp">
+
+               </div>
+            </div>
+
+            <div class="col-8 my-5 card border border-dark">
+               <h5 class="card-header">Rappresentazione 2d</h5>
+               <div class="card-body px-1 text-center" style="font-size:11px;" id="nodeCanvass">
+
+               </div>
+            </div>
+
+         </div>
+
+         <div id="activities_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse2">
+               <h3><i>Attività </i><i id="activities_icon">&#8690;</i></h3>
+            </a>
+         </div>
+
+         <div class="col-10 row collapse justify-content-around mx-auto" id="collapse2">
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Attività Documentali</h5>
+               <div class="card-body dati px-1" id="nodeActivities">
+
+               </div>
+            </div>
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Attività di Comunicazione</h5>
+               <div class="card-body dati px-1" id="nodeFlows">
+
+
+               </div>
+            </div>
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Attività Generiche</h5>
+               <div class="card-body dati px-1" id="nodeGenericActivities">
+
+               </div>
+            </div>
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Attività di Decisione</h5>
+               <div class="card-body dati px-1" id="nodeDecisions">
+
+               </div>
+            </div>
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Residui</h5>
+               <div class="card-body dati px-1" id="nodeResiduals">
+
+               </div>
+            </div>
+
+         </div>
+
+         <div id="roles_documents_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse1">
+               <h3><i>Ruoli e Documenti </i><i id="roles_documents_icon">&#8690;</i></h3>
+            </a>
+         </div>
+         <div class="col-10 row collapse justify-content-around mx-auto" id="collapse1">
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Ruoli</h5>
+               <div class="card-body dati px-1" id="nodeRoles">
+
+               </div>
+            </div>
+
+            <div class="col-6 my-5 card border border-dark">
+               <h5 class="card-header">Documenti</h5>
+               <div class="card-body dati px-1" id="nodeDocuments">
+
+               </div>
+            </div>
+
+         </div>
+
+
+         <div id="traces_workspaces_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse3">
+               <h3><i>Tracce e Spazi Di Lavoro </i><i id="traces_workspaces_icon">&#8690;</i></h3>
+            </a>
+         </div>
+         <div class="col-12 row collapse justify-content-around mx-0" id="collapse3">
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Tracce</h5>
+               <div class="card-body dati px-1 text-center" id="nodeTraces">
+                  <span id="tracesErrors"></span>
+                  <p class="text-center">Traccia <span id="currentTraceNumber"></span> di <span id="tracesNumber"></span></p>
+                  <div id="traceSequences"></div>
+                  <br>
+                  <button type="button" class="btn btn-sm btn-light border-dark col-4" id="previousTraceButton">Precedente</button>
+                  <button type="button" class="btn btn-sm btn-light border-dark col-4 offset-3" id="nextTraceButton">Successiva</button>
+                  <br><br>
+                  <input class="" type="checkbox" id="selectWrongTraces" value="Tracce con errori">
+                  <hr class="col-11 border border-dark">
+                  <div class="col-12 text-left px-1" id="traces">
+
+                  </div>
+
+
+               </div>
+            </div>
+
+            <div class="col-5 my-5 card border border-dark">
+               <h5 class="card-header">Spazi di Lavoro</h5>
+               <div class="card-body dati px-1" id="nodeWorkspaces">
+
+               </div>
+            </div>
+
+         </div>
+
+
+         <div id="rules_div" class="col-12 border border-left-0 border-right-0 border-dark py-2 mx-0 div_title">
+            <a data-toggle="collapse" href="#collapse6">
+               <h3><i>Regole </i><i id="rules_icon">&#8690;</i></h3>
+            </a>
+         </div>
+         <div class="col-10 row collapse justify-content-around mx-auto" id="collapse6">
+
+            <div class="col-9 my-5 mb-2 card border border-dark">
+               <h5 class="card-header">Regole</h5>
+               <div class="card-body dati px-1" id="nodeRules">
+
+               </div>
+            </div>
+
+         </div>
+
+         <div class="col-6 mx-auto pt-5 justify-content-around row my-5">
+            <%if (utente.moderatore == true) { %>
+            <a href="/profilo_admin/gestione_modelli" class="btn btn-secondary" role="button">Annulla validazione</a>
+            <a href="/profilo_admin/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/modifica_progetto" class="btn btn-info" role="button">Modifica modello</a>
+            <% } else{ %>
+            <a href="/profilo_utente" class="btn btn-secondary" role="button">Annulla validazione</a>
+            <a href="/profilo_utente/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/modifica_progetto" class="btn btn-info" role="button">Modifica modello</a>
+            <% } %>
+         </div>
+      </div>
+   </div>
+</div>
+<!--End main content-->
+<!--Footer-->
+<footer class="page-footer border-top border-dark">
+   <div class="col-12 text-center text-white">
+   </div>
+</footer>
+
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<script src="/javascripts/moloc_script/phaseZero/constants.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/globals.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/gui.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/handlers.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/local.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/moloc.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/vocabulary.js"></script>
+<script src="/javascripts/moloc_script/phaseZero/rules.js"></script>
+
+<script src="/javascripts/moloc_script/phaseOne/coordExpCreation.js"></script>
+<script src="/javascripts/moloc_script/phaseOne/modelCreation.js"></script>
+<script src="/javascripts/moloc_script/phaseOne/rulesApplication.js"></script>
+<script src="/javascripts/moloc_script/phaseOne/textProcessing.js"></script>
+
+<script src="/javascripts/moloc_script/phaseTwo/coordExpr.js"></script>
+<script src="/javascripts/moloc_script/phaseTwo/traces.js"></script>
+<script src="/javascripts/moloc_script/phaseTwo/workspace.js"></script>
+
+<script src="/javascripts/moloc_script/phaseThree/errors.js"></script>
+<script src="/javascripts/moloc_script/phaseThree/model.js"></script>
+<script src="/javascripts/moloc_script/phaseThree/output.js"></script>
+<script src="/javascripts/moloc_script/phaseThree/show.js"></script>
+
+<script src="/javascripts/moloc_script/phaseFour/visual2D.js"></script>
+
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>

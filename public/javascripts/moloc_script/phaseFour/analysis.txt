@@ -1,0 +1,25 @@
+SizeInit(B) = 4
+SizeInit(L) = SizeInit(L.c) + 2
+SizeInit(P) = SizeInit(P.l) + SizeInit(P.r) + 2
+SizeInit(C) = SizeInit(C.l) + SizeInit(C.r) + 2
+SizeInit(S) = SizeInit(S.h) + SizeInit(S.t)
+
+HookInit(B) = SizeInit(B) / 2
+HookInit(L) = SizeInit(L.c) / 2
+HookInit(P) = SizeInit(P.l) + 1
+HookInit(C) = SizeInit(C.l) + 1
+HookInit(S) = max(HookInit(S.h), HookInit(S.l))
+
+Size(B) = SizeInit(B)
+Size(L) = min(SizeInit(L), Size(L.c) + 2)
+Size(P) = min(SizeInit(L), Size(P.l) + Size(P.r) + 2)
+Size(C) = min(SizeInit(L), Size(C.l) + Size(C.r) + 2)
+Size(S) = max(Hook(S.h), Hook(S.t)) + max(Size(S.h) - Hook(S.h), Size(S.t) - Hook(S.t))
+
+Hook(B) = Size(B) / 2
+Hook(L) = Hook(L.c)
+Hook(P) = Size(P.l) + 1
+Hook(C) = Size(C.l) + 1
+Hook(S) = max(Hook(S.h), Hook(S.l))
+
+

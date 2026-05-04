@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='/images/favicon-moloc.ico' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+<!--Header-->
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+    <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+    <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+        <select class="selectpicker" onchange="window.location.href=this.value">
+            <optgroup label="Dashboard">
+                <option value="/profilo_admin">Gestione Utenti</option>
+                <option value="/profilo_admin/gestione_modelli">Gestione Modelli</option>
+                <option value="/profilo_admin/gestione_corsi">Gestione Corso</option>
+            </optgroup>
+            <optgroup label="Utenza">
+                <option selected>Registra Utente</option>
+            </optgroup>
+        </select>
+        <ul class="nav">
+            <li class="nav-item dropdown mr-5">
+                <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= utente.username %>
+                </a>
+                <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--End header-->
+<!--Main content-->
+<div class="container-fluid page-content" id="up">
+    <div class="row">
+        <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+            <h3 class="mt-5">Registra Utente</h3>
+        </div>
+        <div class="section-content col-12 py-5 mt-5">
+            <% if (message.length>0) { %>
+                <div class="alert alert-danger col-12 text-center"><%= message %></div>
+            <% } %>
+            <form action="/profilo_admin/registra_utente/registra" method="post">
+                <div class="form-row">
+                    <div class="form-group row col-6 mb-5">
+                        <label class="offset-1 col-10 col-form-label">Username</label>
+                        <div class="col-10 offset-1">
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                    </div>
+                    <div class="form-group row col-6 mb-5">
+                        <label class="offset-1 col-10 col-form-label">Password</label>
+                        <div class="col-10 offset-1">
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group row col-4 mt-5">
+                        <label class="offset-1 col-10 col-form-label">Numero Modelli</label>
+                        <div class="col-10 offset-1">
+                            <input type="number" class="form-control" name="numodelli" value="1" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group row col-4 mt-5">
+                        <label class="offset-2 col-10 col-form-label">Documento di Sinossi</label>
+                        <div class="col-10 offset-2">
+                            <select class="custom-select" name="sinossi">
+                                <option selected value="true">Sì</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row col-4 mt-5">
+                        <label class="offset-2 col-10 col-form-label">Amministratore</label>
+                        <div class="col-10 offset-2">
+                            <select class="custom-select" name="admin">
+                                <option selected value="false">No</option>
+                                <option value="true">Sì</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-5">
+                    <a href="/profilo_admin/gestione_utenti" class="btn btn-danger" role="button">Torna indietro</a>
+                    <button type="submit" class="btn btn-danger offset-1">Registra utente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--End main content-->
+<!--Footer-->
+<footer class="page-footer border-top border-dark">
+    <div class="col-12 text-center text-white">
+    </div>
+</footer>
+<!--End footer-->
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+   <link rel='shortcut icon' type='image/x-icon' href='/images/favicon-moloc.ico' />
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+<!--Header-->
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+   <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+   <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+      <select class="selectpicker" onchange="window.location.href=this.value">
+         <%if (utente.moderatore == true) { %>
+            <optgroup label="Dashboard">
+               <option value="/profilo_admin">Gestione Utenti</option>
+               <option value="/profilo_admin/gestione_modelli">Gestione Modelli</option>
+               <option value="/profilo_admin/gestione_corsi">Gestione Corso</option>
+            </optgroup>
+            <optgroup label="Documento di analisi">
+               <option selected>Anteprima Documento</option>
+            </optgroup>
+         <% } else{ %>
+         <optgroup label="Dashboard">
+            <option value="/profilo_utente">Gestione Profilo</option>
+         </optgroup>
+         <optgroup label="Documento di analisi">
+            <%if (anno.analisi == true) { %>
+            <option selected>Anteprima Documento</option>
+            <option value="/profilo_utente/modifica_documento/<%=documento.id %>">Modifica Documento</option>
+            <% } else{ %>
+               <option selected>Anteprima Documento</option>
+            <% } %>
+         </optgroup>
+         <% } %>
+      </select>
+      <ul class="nav">
+         <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <%= utente.username %>
+            </a>
+            <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+<!--End Header-->
+<!--Main content-->
+<div class="container-fluid page-content" id="up">
+   <div class="row">
+      <nav class="col-2 sidebar px-0">
+         <div class="sidebar-sticky px-0">
+            <div class="list-group">
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#titolo_documento">
+                  Titolo
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#sinossi_documento">
+                  Sinossi
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#descrizione_documento">
+                  Descrizione
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#descrizione_semplificata_documento">
+                  Descrizione semplificata
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#descrizione_ridotta_documento">
+                  Descrizione ridotta
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#descrizione_residua_documento">
+                  Descrizione residua
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#parafrasi_documento">
+                  Parafrasi
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#glossario_documento">
+                  Glossario
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#ruoli_documento">
+                  Ruoli
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#documenti_documento">
+                  Documenti
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#flussi_documento">
+                  Flussi
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center" href="#attività_documento">
+                  Attività
+               </a>
+               <a class="list-group-item list-group-item-action py-1 border-right-0 border-left-0 text-center mb-5" href="#note_documento">
+                  Note
+               </a>
+            </div>
+            <%if (utente.moderatore == true) { %>
+               <a href="/profilo_admin" class="btn btn-sn btn-light col-8 offset-2" role="button">Torna indietro</a>
+            <% } else{ %>
+            <%if (anno.analisi == true) { %>
+            <a href="/profilo_utente/modifica_documento/<%=documento.id %>" class="btn btn-sm btn-light col-8 offset-2" role="button">Modifica</a>
+            <br>
+            <a href="/profilo_utente" class="btn btn-sm btn-light col-8 offset-2 mt-4" role="button">Torna indietro</a>
+            <% } else{ %>
+               <a href="/profilo_utente" class="btn btn-sm btn-light col-8 offset-2 mt-4" role="button">Torna indietro</a>
+            <% } %>
+
+            <% } %>
+         </div>
+      </nav>
+      <div class="col-10 content">
+         <div class="section-title col-12 mx-auto py-3 border-bottom border-dark">
+            <h3 id="titolo_documento" class="mt-5">Anteprima del documento di analisi</h3>
+         </div>
+         <div class="col-11 p-0 mx-auto">
+            <div class="text-center mt-4 d-block anchor">
+               <%- documento.titolo %>
+            </div>
+            <p class="text-center"><small>Versione <%= (documento.indice).toFixed(2)%></small></p>
+            <p class="text-center mt-4" id="utente"><%= nickname %></p>
+            <p class="text-center"><small>Ultima modifica:</small> <small id="ultima_modifica"><%= documento.ultimamodifica %></small></p>
+
+            <br>
+            <hr class="col-8 dotted" id="sinossi_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Sinossi</b></h4>
+            <div id="sinossi">
+               <%- documento.sinossi %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="descrizione_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Descrizione</b></h4>
+            <div id="descrizione">
+               <%- documento.descrizione %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="descrizione_semplificata_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Descrizione semplificata</b></h4>
+            <div id="descrizione_semplificata">
+               <%- documento.descrizione_semplificata %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="descrizione_ridotta_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Descrizione ridotta</b></h4>
+            <div id="descrizione_ridotta">
+               <%- documento.descrizione_ridotta %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="descrizione_residua_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Descrizione residua</b></h4>
+            <div id="descrizione_residua">
+               <%- documento.descrizione_residua %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="parafrasi_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Parafrasi</b></h4>
+            <div id="parafrasi">
+               <%- documento.parafrasi %>
+            </div>
+
+            <br>
+            <hr class="col-8 dotted" id="glossario_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Glossario</b></h4>
+
+            <div>
+               <ul id="glossario">
+                  <%- documento.glossario %>
+               </ul>
+            </div>
+
+
+            <br>
+            <hr class="col-8 dotted" id="ruoli_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Ruoli</b></h4>
+            <ul>
+               <li>
+                  <b>Ruoli individuali</b>
+
+                  <div>
+                     <ul id="ruoli_individuali">
+                        <%- documento.ruoli_individuali %>
+                     </ul>
+                  </div>
+
+               </li>
+               <li class="mt-4">
+                  <b>Ruoli collettivi</b>
+
+                  <div>
+                     <ul id="ruoli_collettivi">
+                        <%- documento.ruoli_collettivi %>
+                     </ul>
+                  </div>
+
+               </li>
+               <li class="mt-4">
+                  <b>Ruoli giuridici</b>
+
+                  <div>
+                     <ul id="ruoli_giuridici">
+                        <%- documento.ruoli_giuridici %>
+                     </ul>
+                  </div>
+
+               </li>
+            </ul>
+
+            <br>
+            <hr class="col-8 dotted" id="documenti_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Documenti</b></h4>
+
+            <div>
+               <ul id="documenti">
+
+                  <%- documento.documenti %>
+               </ul>
+            </div>
+
+
+            <br>
+            <hr class="col-8 dotted" id="flussi_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Flussi</b></h4>
+
+            <div>
+               <ul id="flussi">
+                  <%- documento.flussi %>
+               </ul>
+            </div>
+
+
+            <br>
+            <hr class="col-8 dotted" id="attività_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Attività</b></h4>
+            <ul>
+               <li>
+                  <b>Attività dei ruoli individuali</b>
+
+                  <div>
+                     <ul id="attività_individuali">
+                        <%- documento.attivita_ruoli_individuali %>
+                     </ul>
+                  </div>
+
+               </li>
+               <li class="mt-4">
+                  <b>Attività dei ruoli collettivi</b>
+
+                  <div>
+                     <ul id="attività_collettive">
+                        <%- documento.attivita_ruoli_collettivi %>
+                     </ul>
+                  </div>
+
+               </li>
+               <li class="mt-4">
+                  <b>Attività dei ruoli giuridici</b>
+
+                  <div>
+                     <ul id="attività_giuridiche">
+                        <%- documento.attivita_ruoli_giuridici %>
+                     </ul>
+                  </div>
+
+               </li>
+            </ul>
+
+            <br>
+            <hr class="col-8 dotted" id="note_documento">
+            <br>
+
+            <h4 class="mt-2 mb-4 anchor"><b>Note</b></h4>
+            <div id="note">
+               <%- documento.note %>
+            </div>
+
+         </div>
+      </div>
+
+
+   </div>
+</div>
+<!--End main content-->
+<!--Footer-->
+<footer class="page-footer border-top border-dark">
+   <div class="col-12 text-center text-white">
+   </div>
+</footer>
+<!--End footer-->
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>

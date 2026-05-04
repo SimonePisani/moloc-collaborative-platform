@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+   <link rel='shortcut icon' type='image/x-icon' href='/images/favicon-moloc.ico' />
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+<!--Header-->
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+   <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+   <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+      <select class="selectpicker" onchange="window.location.href=this.value">
+         <optgroup label="Dashboard">
+            <option value="/profilo_admin">Gestione Utenti</option>
+            <option value="/profilo_admin/gestione_modelli">Gestione Modelli</option>
+            <option selected>Gestione Corso</option>
+         </optgroup>
+      </select>
+      <ul class="nav">
+         <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <%= utente.username %>
+            </a>
+            <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+<!--End header-->
+<!--Main content-->
+<div class="container-fluid page-navbar" id="up">
+   <div class="row">
+      <div class="section-nav col-12 mx-auto py-4 px-0">
+         <nav class="col-12 navbar justify-content-center navbar-expand navbar-light bg-light border-bottom border-dark mt-4">
+            <div class="navbar-nav" id="navbar">
+               <a class="nav-item nav-link" href="/profilo_admin">Gestione utenti</a>
+               <a class="nav-item nav-link" href="/profilo_admin/gestione_modelli">Gestione modelli</a>
+               <a class="nav-item nav-link active">Gestione corso</a>
+            </div>
+         </nav>
+      </div>
+   </div>
+</div>
+<div class="container-fluid page-content">
+   <form action="/profilo_admin/gestione_corsi/salva_modifiche" method="post">
+      <div class="row">
+         <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+            <h3 class="mt-3">Gestione corso</h3>
+         </div>
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_analisi">Abilita la modifica del <b>documento di analisi</b>:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.analisi==false){ %>
+               <input class="d-none" id="analisi_check" name="analisi_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_analisi" id="toggle_analisi">
+            <%} else {%>
+               <input class="d-none" id="analisi_check" name="analisi_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_analisi" id="toggle_analisi">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_titolo">Abilita la modifica del <b>titolo</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.titolo==false){ %>
+               <input class="d-none" id="titolo_check" name="titolo_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_titolo" id="toggle_titolo">
+            <%} else {%>
+               <input class="d-none" id="titolo_check" name="titolo_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_titolo" id="toggle_titolo">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_sinossi">Abilita la modifica della <b>sinossi</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.sinossi==false){ %>
+               <input class="d-none" id="sinossi_check" name="sinossi_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_sinossi" id="toggle_sinossi">
+            <%} else {%>
+               <input class="d-none" id="sinossi_check" name="sinossi_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_sinossi" id="toggle_sinossi">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_descrizione">Abilita la modifica della <b>descrizione</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.descrizione==false){ %>
+               <input class="d-none" id="descrizione_check" name="descrizione_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione" id="toggle_descrizione">
+            <%} else {%>
+               <input class="d-none" id="descrizione_check" name="descrizione_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione" id="toggle_descrizione">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_descrizione_semplificata">Abilita la modifica della <b>descrizione semplificata</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.descrizione_semplificata==false){ %>
+               <input class="d-none" id="descrizione_semplificata_check" name="descrizione_semplificata_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_semplificata" id="toggle_descrizione_semplificata">
+            <%} else {%>
+               <input class="d-none" id="descrizione_semplificata_check" name="descrizione_semplificata_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_semplificata" id="toggle_descrizione_semplificata">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_descrizione_ridotta">Abilita la modifica della <b>descrizione ridotta</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.descrizione_ridotta==false){ %>
+               <input class="d-none" id="descrizione_ridotta_check" name="descrizione_ridotta_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_ridotta" id="toggle_descrizione_ridotta">
+            <%} else {%>
+               <input class="d-none" id="descrizione_ridotta_check" name="descrizione_ridotta_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_ridotta" id="toggle_descrizione_ridotta">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_descrizione_residua">Abilita la modifica della <b>descrizione residua</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.descrizione_residua==false){ %>
+               <input class="d-none" id="descrizione_residua_check" name="descrizione_residua_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_residua" id="toggle_descrizione_residua">
+            <%} else {%>
+               <input class="d-none" id="descrizione_residua_check" name="descrizione_residua_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_descrizione_residua" id="toggle_descrizione_residua">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_parafrasi">Abilita la modifica della <b>parafrasi</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.parafrasi==false){ %>
+               <input class="d-none" id="parafrasi_check" name="parafrasi_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_parafrasi" id="toggle_parafrasi">
+            <%} else {%>
+               <input class="d-none" id="parafrasi_check" name="parafrasi_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_parafrasi" id="toggle_parafrasi">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_glossario">Abilita la modifica del <b>glossario</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.glossario==false){ %>
+               <input class="d-none" id="glossario_check" name="glossario_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_glossario" id="toggle_glossario">
+            <%} else {%>
+               <input class="d-none" id="glossario_check" name="glossario_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_glossario" id="toggle_glossario">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_ruoli">Abilita la modifica dei <b>ruoli</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.ruoli==false){ %>
+               <input class="d-none" id="ruoli_check" name="ruoli_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_ruoli" id="toggle_ruoli">
+            <%} else {%>
+               <input class="d-none" id="ruoli_check" name="ruoli_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_ruoli" id="toggle_ruoli">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="">Abilita la modifica dei <b>documenti</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.documenti==false){ %>
+               <input class="d-none" id="documenti_check" name="documenti_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_documenti" id="toggle_documenti">
+            <%} else {%>
+               <input class="d-none" id="documenti_check" name="documenti_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_documenti" id="toggle_documenti">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_flussi">Abilita la modifica dei <b>flussi</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.flussi==false){ %>
+               <input class="d-none" id="flussi_check" name="flussi_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_flussi" id="toggle_flussi">
+            <%} else {%>
+               <input class="d-none" id="flussi_check" name="flussi_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_flussi" id="toggle_flussi">
+            <% } %>
+         </div>
+
+         <div class="col-6 mt-5 offset-1">
+            <label for="toggle_attivita">Abilita la modifica delle <b>attività</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 mt-5 text-right">
+            <%if(corso.attivita==false){ %>
+               <input class="d-none" id="attivita_check" name="attivita_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_attivita" id="toggle_attivita">
+            <%} else {%>
+               <input class="d-none" id="attivita_check" name="attivita_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_attivita" id="toggle_attivita">
+            <% } %>
+         </div>
+
+         <div class="col-6 my-5 offset-1">
+            <label for="toggle_note">Abilita la modifica delle <b>note</b> nel documento di analisi:</label>
+         </div>
+         <div class="col-3 my-5 text-right">
+            <%if(corso.note==false){ %>
+               <input class="d-none" id="note_check" name="note_check" value="false">
+               <input type="checkbox" data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_note" id="toggle_note">
+            <%} else {%>
+               <input class="d-none" id="note_check" name="note_check" value="true">
+               <input type="checkbox" checked data-toggle="toggle" data-size="md" data-onstyle="success" name="toggle_note" id="toggle_note">
+            <% } %>
+         </div>
+         <div class="col-12 text-center py-5 mb-5">
+            <button type="submit" class="btn btn-danger mx-auto">Salva modifiche</button>
+         </div>
+
+
+      </div>
+   </form>
+</div>
+<!--End main content-->
+<!--footer-->
+<footer class="page-footer border-top border-dark">
+   <div class="col-12 text-center text-white">
+   </div>
+</footer>
+<!--end footer-->
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>

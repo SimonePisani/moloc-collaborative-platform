@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/stylesheets/moloc.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0/dist/sweetalert2.css">
+   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+   <link rel='shortcut icon' type='image/x-icon' href='/images/favicon-moloc.ico' />
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <title>moloc: un ambiente per modellare il lavoro collaborativo</title>
+</head>
+
+<body>
+<!--Header-->
+<nav class="navbar navbar-dark py-1 navtop fixed-top border-bottom border-dark shadow-lg justify-content-start">
+   <a class="navbar-brand" href="/">moloc <small>v. 6.7</small></a>
+   <div class="d-flex justify-content-between col-md-10 col-sm-8 ml-5">
+      <select class="selectpicker" onchange="window.location.href=this.value">
+         <optgroup label="Dashboard">
+            <option value="/profilo_utente">Gestione Profilo</option>
+         </optgroup>
+      </select>
+      <ul class="nav">
+         <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle utente text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <%= utente.username %>
+            </a>
+            <div class="dropdown-menu utentelogin" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+<!--End Header-->
+<!--Main content-->
+<div class="container-fluid page-content" id="up">
+   <div class="row">
+      <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+         <h3 class="pt-5 mt-5">Analisi</h3>
+      </div>
+      <div class="section-content col-12 py-5">
+         <table class="table table-bordered p-0 bg-light border border-dark my-4 col-10 mx-auto">
+            <thead>
+            <tr class="bg-tab">
+               <th scope="col" class="col_90">Sinossi - <%- documento.titolo.replace(/<\/?.+?>/ig, '') %></th>
+               <th scope="col" class="col_10">Operazioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <td><%- documento.sinossi %></td>
+               <td>
+                  <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown"><i class="icon-cog"></i></button>
+                  <div class="dropdown-menu border border-dark">
+                     <form class="d-inline" action="/profilo_utente/visualizza_documento/<%= documento.id %>" method="get">
+                        <button type="submit" class="dropdown-item"><i class="icon-zoom-in"></i> Anteprima documento</button>
+                     </form>
+                     <%if (anno.analisi == true) { %>
+                        <div class="dropdown-divider"></div>
+                        <form class="d-inline" action="/profilo_utente/modifica_documento/<%= documento.id %> " method="get">
+                           <button type="submit" class="dropdown-item"><i class="icon-edit-sign"></i> Modifica documento</button>
+                        </form>
+                     <% } %>
+                  </div>
+               </td>
+            </tr>
+            </tbody>
+         </table>
+      </div>
+
+      <div class="section-title col-11 mx-auto py-3 border-bottom border-dark">
+         <h3 class="mt-5">Modellazione</h3>
+      </div>
+      <div class="section-content col-12 py-5">
+         <table class="table table-bordered p-0 bg-light border border-dark my-4 col-10 mx-auto">
+            <thead>
+            <tr class="bg-tab">
+               <th scope="col" class="col_60">Nome Modello</th>
+               <th scope="col" class="col_15">Autore</th>
+               <th scope="col" class="col_15">Ultima Modifica</th>
+               <th scope="col" class="col_10">Operazioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% modelli.forEach(function(modello){ %>
+               <tr>
+                  <td><%= modello.titolo %><small class="text-muted">- v.<%= (modello.indice).toFixed(2) %></small></td>
+                  <td><%= utente.username %></td>
+                  <td><%= modello.ultimamodifica %></td>
+                  <td>
+                     <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown"><i class="icon-cog"></i></button>
+                     <div class="dropdown-menu border border-dark">
+                        <form class="d-inline" action="/profilo_utente/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/modifica_progetto" method="get">
+                           <button type="submit" class="dropdown-item"><i class="icon-edit-sign"></i> Modifica modello</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form class="d-inline" action="/profilo_utente/<%=modello.id%>/<%=modello.titolo.split(' ').join('_');%>/valida_progetto" method="get">
+                           <button type="submit" class="dropdown-item"><i class="icon-check-sign"></i> Valida modello</button>
+                        </form>
+                     </div>
+                  </td>
+               </tr>
+            <% }) %>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+<!--End main content-->
+<!--Footer-->
+<footer class="page-footer border-top border-dark">
+   <div class="col-12 text-center text-white">
+   </div>
+</footer>
+<!--End footer-->
+<a id="back-to-top" href="#up" class="back-to-top border rounded-circle" role="button"><img alt="ScrollUp" src=/images/btt.png></a>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.13.0"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="/javascripts/moloc.js"></script>
+</body>
+
+</html>
