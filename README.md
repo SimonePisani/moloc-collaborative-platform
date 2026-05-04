@@ -1,2 +1,141 @@
-# moloc-collaborative-platform
-University project – client-server web platform for collaborative model analysis, document versioning and automatic validation
+# Moloc – Collaborative Platform
+
+University project – client-server web platform for collaborative model analysis, document versioning and automatic validation.
+
+---
+
+## 🚀 Overview
+
+Moloc is a web-based platform developed to support the creation, validation, and collaborative management of structured models.
+The system replaces a legacy desktop tool with a modern client-server architecture, enabling multiple users to interact with shared resources through a browser.
+
+---
+
+## ✨ Features
+
+* 🔐 User authentication and role-based access control (admin / user)
+* 🤝 Collaborative document and model management
+* 📝 Document editing and visualization
+* 🕒 Versioning system for documents and models
+* ✅ Automatic validation of structured models
+* 🌐 Web interface accessible via browser
+* ⚙️ Migration from legacy standalone application
+
+---
+
+## 🏗️ Architecture
+
+The application follows a classic MVC structure:
+
+* **Backend:** Node.js + Express
+* **Database:** MongoDB (via Mongoose)
+* **Frontend:** EJS templates + JavaScript
+* **Structure:**
+
+  * `controllers/` → application logic
+  * `models/` → database schemas
+  * `routes/` → routing layer
+  * `views/` → UI templates
+  * `public/` → static assets
+
+---
+
+## 🛠️ Tech Stack
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* EJS
+* JavaScript (frontend)
+* CSS
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/SimonePisani/moloc-collaborative-platform.git
+cd moloc-collaborative-platform
+```
+
+---
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3. Configure environment variables
+
+Create a `.env` file based on `.env.example`:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+SESSION_SECRET=your_secret_key
+PORT=8080
+```
+
+---
+
+### 4. Run the application
+
+```bash
+npm start
+```
+
+The server will start on:
+
+```
+http://localhost:8080
+```
+
+---
+
+## 🔐 Authentication
+
+The system supports:
+
+* User registration
+* Login system
+* Role-based permissions (admin / standard user)
+
+---
+
+## 📌 Notes
+
+* This project was developed as part of a university thesis.
+* It has been tested in a real academic environment.
+* Some configurations (e.g. database credentials) are intentionally excluded for security reasons.
+
+---
+
+## 📷 Screenshots
+
+*Add screenshots here to showcase the UI (recommended for portfolio visibility).*
+
+---
+
+## 🚧 Future Improvements
+
+* UI/UX modernization
+* REST API refactoring
+* Deployment (Docker / cloud)
+* Improved validation engine
+
+---
+
+## 👨‍💻 Author
+
+Simone Pisani
+
+---
+
+## 📄 License
+
+This project is for educational purposes.
