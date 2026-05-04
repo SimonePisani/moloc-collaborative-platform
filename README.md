@@ -173,7 +173,7 @@ Dashboard
 ---
 
 Overview
-<img width="1837" height="960" alt="Screenshot 2026-05-04 123650" src="https://github.com/user-attachments/assets/9f341b06-d579-4df4-8911-f9d75081a44f" />
+<img width="1856" height="944" alt="Screenshot 2026-05-04 124924" src="https://github.com/user-attachments/assets/d7060a12-933e-412e-98c7-2ee12aaf5b0e" />
 
 ---
 
